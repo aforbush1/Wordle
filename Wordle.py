@@ -1,4 +1,4 @@
-#Hello Adam
+#I like pizza
 # File: Wordle.py
 
 """
