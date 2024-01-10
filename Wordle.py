@@ -1,7 +1,3 @@
-#I like pizza
-# File: Wordle.py
-#Does this work now?
-
 """
 This module is the starter file for the Wordle assignment.
 BE SURE TO UPDATE THIS COMMENT WHEN YOU WRITE THE CODE.
