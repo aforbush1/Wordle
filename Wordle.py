@@ -10,8 +10,8 @@ from WordleGraphics import WordleGWindow, N_COLS, N_ROWS
 
 def wordle():
 
-    def enter_action(s):
-        gw.show_message("You have to implement this method.")
+    def enter_action(guess):
+        gw.show_message("Congratulations! You guessed the Word!")
 
     gw = WordleGWindow()
     gw.add_enter_listener(enter_action)
