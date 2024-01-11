@@ -4,24 +4,26 @@ BE SURE TO UPDATE THIS COMMENT WHEN YOU WRITE THE CODE.
 """
 
 import random
-
 from WordleDictionary import FIVE_LETTER_WORDS
 from WordleGraphics import WordleGWindow, N_COLS, N_ROWS
 
 def wordle():
     # Random select from the Array of 5 letter words, set to variable "word_of_the_day".
     word_of_the_day = random.choice(FIVE_LETTER_WORDS).upper()
-    print(word_of_the_day)
+    
+    # for row in range(0, rows):
+    #     for col in range(0, cols):
+    #         print(word_of_the_day[col])
 
     def enter_action(guess):
-        gw.show_message("Congratulations! You guessed the Word!")
+        gw.show_message("Congratulations! You guessed the word!")
 
     gw = WordleGWindow()
     gw.add_enter_listener(enter_action)
 
-    # Display the individual letters of the word_of_the_day in the WordleGWindow
-    for col, letter in enumerate(word_of_the_day):
-        gw.set_square_letter(0, col, letter)
+    for row in range(0, N_ROWS):
+        for cols, letter in enumerate(word_of_the_day):
+            gw.set_square_letter(row, cols, letter)
 
 # Startup code
 if __name__ == "__main__":
