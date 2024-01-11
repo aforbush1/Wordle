@@ -8,16 +8,23 @@ from WordleDictionary import FIVE_LETTER_WORDS
 from WordleGraphics import WordleGWindow, N_COLS, N_ROWS
 
 def wordle():
+    # Create the WordleGWindow object
+    gw = WordleGWindow()
     # Random select from the Array of 5 letter words, set to variable "word_of_the_day".
     word_of_the_day = random.choice(FIVE_LETTER_WORDS).upper()
 
+    # This currently just checks the first word
     def enter_action(guess):
-        gw.show_message("Congratulations! You guessed the word!")
+        if(guess.lower() in FIVE_LETTER_WORDS):
+            gw.show_message("You guessed the word!")
+        elif(guess.lower() not in FIVE_LETTER_WORDS):
+            gw.show_message("Not in word list")
 
-    gw = WordleGWindow()
+    # Call the function
     gw.add_enter_listener(enter_action)
 
     # #MILESTONE 1
+    # Iterate through the entire matrix
     # for row in range(0, N_ROWS):
     #     for col, letter in enumerate(word_of_the_day):
     #         gw.set_square_letter(row, col, letter)
