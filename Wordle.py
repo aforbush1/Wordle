@@ -10,10 +10,6 @@ from WordleGraphics import WordleGWindow, N_COLS, N_ROWS
 def wordle():
     # Random select from the Array of 5 letter words, set to variable "word_of_the_day".
     word_of_the_day = random.choice(FIVE_LETTER_WORDS).upper()
-    
-    # for row in range(0, rows):
-    #     for col in range(0, cols):
-    #         print(word_of_the_day[col])
 
     def enter_action(guess):
         gw.show_message("Congratulations! You guessed the word!")
