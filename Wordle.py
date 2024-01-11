@@ -17,9 +17,10 @@ def wordle():
     gw = WordleGWindow()
     gw.add_enter_listener(enter_action)
 
+    #MILESTONE 1
     for row in range(0, N_ROWS):
-        for cols, letter in enumerate(word_of_the_day):
-            gw.set_square_letter(row, cols, letter)
+        for col, letter in enumerate(word_of_the_day):
+            gw.set_square_letter(row, col, letter)
 
 # Startup code
 if __name__ == "__main__":
