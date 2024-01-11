@@ -11,12 +11,15 @@ def wordle():
     # Create the WordleGWindow object
     gw = WordleGWindow()
     # Random select from the Array of 5 letter words, set to variable "word_of_the_day".
-    word_of_the_day = random.choice(FIVE_LETTER_WORDS).upper()
+    word_of_the_day = random.choice(FIVE_LETTER_WORDS).lower()
 
     # This currently just checks the first word
     def enter_action(guess):
         if(guess.lower() in FIVE_LETTER_WORDS):
-            gw.show_message("You guessed the word!")
+            if(guess.lower() == word_of_the_day.lower()):
+                gw.show_message("You guessed the word!")
+            else:
+                print("Valid word")
         elif(guess.lower() not in FIVE_LETTER_WORDS):
             gw.show_message("Not in word list")
 
