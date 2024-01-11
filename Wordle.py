@@ -24,10 +24,9 @@ def wordle():
     gw.add_enter_listener(enter_action)
 
     # #MILESTONE 1
-    # Iterate through the entire matrix
-    # for row in range(0, N_ROWS):
-    #     for col, letter in enumerate(word_of_the_day):
-    #         gw.set_square_letter(row, col, letter)
+    # # Iterate through the entire matrix
+    # for col, letter in enumerate(word_of_the_day):
+    #     gw.set_square_letter(0, col, letter)
 
 # Startup code
 if __name__ == "__main__":
