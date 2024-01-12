@@ -16,22 +16,24 @@ def wordle():
 
     # This currently just checks the first word
     def enter_action(guess):
-        secret_word = []
-
-        for letter in guess:
-            secret_word.append(letter)
-
         if(guess.lower() in FIVE_LETTER_WORDS):
+            for col, letter in enumerate(guess):
+                gw.set_square_letter(0, col, letter)
+
             if(guess.lower() == word_of_the_day.lower()):
                 gw.show_message("You guessed the word!")
             else:
                 gw.set_current_row(0)
                 gw.set_square_color(0,0,'#999999')
+                
+                for col, letter in enumerate(guess):
+                    gw.set_square_letter(0, col, letter)
         elif(guess.lower() not in FIVE_LETTER_WORDS):
             gw.show_message("Not in word list")
 
     # Call the function
-    #gw.add_enter_listener(enter_action)
+    gw.set_square_letter(0, 0, 'H')
+    gw.add_enter_listener(enter_action)
 
     # #MILESTONE 1
     # # Iterate through the entire matrix
