@@ -21,21 +21,18 @@ def wordle():
         if(guess.lower() in FIVE_LETTER_WORDS):
             if(guess.lower() == word_of_the_day.lower()):
                 for col in range(0, N_COLS):
+                    # row needs to be adjusted to be current
                     gw.set_square_color(0, col, CORRECT_COLOR)
                 
                 gw.show_message("You guessed the word!")
             else:
-                for character in word_of_the_day:
-                    for char in guess:
-                        if(char == character):
-                            gw.set_square_color(0, 0, CORRECT_COLOR)
-                        elif(char in word_of_the_day):
-                            gw.set_square_color(0,0,PRESENT_COLOR)
-                        else:
-                            gw.set_square_color(0, 0, MISSING_COLOR)
-                
-                for col, letter in enumerate(guess):
-                    gw.set_square_letter(0, col, letter)
+                for col in range(0, N_COLS):
+                    if(gw.get_square_letter(0, col).lower() == word_of_the_day[col]):
+                        gw.set_square_color(0, col, CORRECT_COLOR)
+                    elif(gw.get_square_letter(0, col).lower() in word_of_the_day):
+                        gw.set_square_color(0, col, PRESENT_COLOR)
+                    else:
+                        gw.set_square_color(0, col, MISSING_COLOR)
         elif(guess.lower() not in FIVE_LETTER_WORDS):
             gw.show_message("Not in word list")
 
