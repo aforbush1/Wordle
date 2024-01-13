@@ -32,7 +32,6 @@ def wordle():
 
     # Call the function
     #gw.add_enter_listener(enter_action)
-
     # #MILESTONE 1
     # # Iterate through the entire matrix
     # for col, letter in enumerate(word_of_the_day):
