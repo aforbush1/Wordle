@@ -48,7 +48,6 @@ def wordle():
         if(guess.lower() in FIVE_LETTER_WORDS):
             if(guess.lower() == word_of_the_day.lower()):
                 for col in range(0, N_COLS):
-                    # row needs to be adjusted to be current
                     gw.set_square_color(current_row, col, CORRECT_COLOR)
                 gw.show_message("You guessed the word!")
             else:
@@ -68,15 +67,6 @@ def wordle():
         gw.set_current_row(current_row)
     # Set the enter_action function as a callback for the ENTER key
     gw.add_enter_listener(enter_action)
-    # a += 1
-    # gw.add_enter_listener(enter_action)
-    # a += 1
-    # gw.add_enter_listener(enter_action)
-    # a += 1
-    # gw.add_enter_listener(enter_action)
-    # a += 1
-    # gw.add_enter_listener(enter_action)
-    # a += 1
 
     # #MILESTONE 1
     # # Iterate through the entire matrix
