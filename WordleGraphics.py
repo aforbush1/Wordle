@@ -100,7 +100,7 @@ class WordleGWindow:
                 ch = tke.upper()
             else:
                 ch = tke.char.upper()
-            if ch == "\007" or ch == "\177" or ch == "DELETE":
+            if ch == "\007" or ch == "\177" or ch == "DELETE" or ch == "BACKSPACE" or ch == "\b":
                 self.show_message("")
                 if self._row < N_ROWS and self._col > 0:
                     self._col -= 1
@@ -110,7 +110,7 @@ class WordleGWindow:
                 self.show_message("")
                 s = ""
                 for col in range(N_COLS):
-                    s += self._grid[self._row][col].get_letter();
+                    s += self._grid[self._row][col].get_letter()
                 for fn in self._enter_listeners:
                     fn(s)
             elif ch.isalpha():
@@ -215,7 +215,7 @@ class WordleSquare:
         y1 = y0 + SQUARE_SIZE
         self._canvas = canvas
         self._ch = " "
-        self._color = UNKNOWN_COLOR;
+        self._color = UNKNOWN_COLOR
         self._frame = canvas.create_rectangle(x0, y0, x1, y1)
         self._text = canvas.create_text(x0 + SQUARE_SIZE / 2,
                                         y0 + SQUARE_SIZE / 2,
@@ -252,7 +252,7 @@ class WordleKey:
         font = KEY_FONT
         if label == "ENTER":
             font = ENTER_FONT
-        if label == "DELETE":
+        if label == "DELETE" or label == "BACKSPACE":
             label = "\u232B"
         points = [ x + KEY_CORNER, y,
                    x + KEY_CORNER, y,
