@@ -12,8 +12,10 @@ def wordle():
     gw = WordleGWindow()
     # Random select from the Array of 5 letter words, set to variable "word_of_the_day".
     word_of_the_day = random.choice(FIVE_LETTER_WORDS).lower()
+    word_of_the_day = 'helve'
     print(word_of_the_day)
-    # This currently just checks the first word
+
+    # This currently just checks the first word and row
     def enter_action(guess):
         for col, letter in enumerate(guess):
             gw.set_square_letter(0, col, letter)
@@ -30,15 +32,27 @@ def wordle():
                     if(gw.get_square_letter(0, col).lower() == word_of_the_day[col]):
                         gw.set_square_color(0, col, CORRECT_COLOR)
                     elif(gw.get_square_letter(0, col).lower() in word_of_the_day):
-                        gw.set_square_color(0, col, PRESENT_COLOR)
+                        if(gw.get_square_letter(0, col).lower() in guess[:col]):
+                            gw.set_square_color(0, col, MISSING_COLOR)
+                        else:
+                            gw.set_square_color(0, col, PRESENT_COLOR)
                     else:
                         gw.set_square_color(0, col, MISSING_COLOR)
         elif(guess.lower() not in FIVE_LETTER_WORDS):
             gw.show_message("Not in word list")
 
+    a = N_ROWS
     # Call the function
-    # gw.set_square_letter(0, 0, 'H')
     gw.add_enter_listener(enter_action)
+    # a += 1
+    # gw.add_enter_listener(enter_action)
+    # a += 1
+    # gw.add_enter_listener(enter_action)
+    # a += 1
+    # gw.add_enter_listener(enter_action)
+    # a += 1
+    # gw.add_enter_listener(enter_action)
+    # a += 1
 
     # #MILESTONE 1
     # # Iterate through the entire matrix
