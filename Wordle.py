@@ -43,10 +43,7 @@ def wordle():
                     if(gw.get_square_letter(0, col).lower() == word_of_the_day[col]):
                         gw.set_square_color(0, col, CORRECT_COLOR)
                     elif(gw.get_square_letter(0, col).lower() in word_of_the_day):
-                        if(gw.get_square_letter(0, col).lower() in guess[:col]):
-                            gw.set_square_color(0, col, MISSING_COLOR)
-                        else:
-                            gw.set_square_color(0, col, PRESENT_COLOR)
+                        gw.set_square_color(0, col, PRESENT_COLOR)
                     else:
                         gw.set_square_color(current_row, col, MISSING_COLOR)
                 current_row += 1
@@ -78,4 +75,3 @@ if __name__ == "__main__":
     wordle()
     # Press the "Enter" key in the terminal to close the program
     input("Press Enter to exit")
-
