@@ -40,10 +40,10 @@ def wordle():
                 gw.show_message("You guessed the word!")
             else:
                 for col in range(0, N_COLS):
-                    if(gw.get_square_letter(0, col).lower() == word_of_the_day[col]):
-                        gw.set_square_color(0, col, CORRECT_COLOR)
-                    elif(gw.get_square_letter(0, col).lower() in word_of_the_day):
-                        gw.set_square_color(0, col, PRESENT_COLOR)
+                    if(gw.get_square_letter(current_row, col).lower() == word_of_the_day[col]):
+                        gw.set_square_color(current_row, col, CORRECT_COLOR)
+                    elif(gw.get_square_letter(current_row, col).lower() in word_of_the_day):
+                        gw.set_square_color(current_row, col, PRESENT_COLOR)
                     else:
                         gw.set_square_color(current_row, col, MISSING_COLOR)
                 current_row += 1
