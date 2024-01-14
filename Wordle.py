@@ -30,6 +30,16 @@ def wordle():
         # ERROR: 'list index out of range'. I think it has something to do with incrementing after last guess...
         if current_row >= MAX_GUESSES:
             gw.show_message("You've reached the maximum number of guesses.")
+            
+            if word_of_the_day.lower() not in [gw.get_square_letter(row, col).lower() for col in range(N_COLS) for row in range(MAX_GUESSES)]:
+                for col in range(0, N_COLS):
+                    if(gw.get_square_letter(current_row, col).lower() == word_of_the_day[col]):
+                        gw.set_square_color(current_row, col, CORRECT_COLOR)
+                    elif(gw.get_square_letter(current_row, col).lower() in word_of_the_day):
+                        gw.set_square_color(current_row, col, PRESENT_COLOR)
+                    else:
+                        gw.set_square_color(current_row, col, MISSING_COLOR)
+            
             return
 
         for col, letter in enumerate(guess):
