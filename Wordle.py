@@ -30,7 +30,7 @@ def wordle():
 
         # Check if the maximum number of guesses has been reached
         # ERROR: 'list index out of range'. I think it has something to do with incrementing after last guess...
-        if current_row > MAX_GUESSES:
+        if current_row >= MAX_GUESSES:
             gw.show_message("You've reached the maximum number of guesses.")
             return
 
