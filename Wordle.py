@@ -17,8 +17,10 @@ def wordle():
     current_row = gw.get_current_row()
     # Random select from the Array of 5 letter words, set to variable "word_of_the_day".
     word_of_the_day = random.choice(FIVE_LETTER_WORDS).lower()
+    word_of_the_day = 'helve'
     print(word_of_the_day)
-    # This currently just checks the first word
+
+    # This currently just checks the first word and row
     def enter_action(guess):
         nonlocal current_row
 
@@ -38,10 +40,13 @@ def wordle():
                 gw.show_message("You guessed the word!")
             else:
                 for col in range(0, N_COLS):
-                    if(gw.get_square_letter(current_row, col).lower() == word_of_the_day[col]):
-                        gw.set_square_color(current_row, col, CORRECT_COLOR)
-                    elif(gw.get_square_letter(current_row, col).lower() in word_of_the_day):
-                        gw.set_square_color(current_row, col, PRESENT_COLOR)
+                    if(gw.get_square_letter(0, col).lower() == word_of_the_day[col]):
+                        gw.set_square_color(0, col, CORRECT_COLOR)
+                    elif(gw.get_square_letter(0, col).lower() in word_of_the_day):
+                        if(gw.get_square_letter(0, col).lower() in guess[:col]):
+                            gw.set_square_color(0, col, MISSING_COLOR)
+                        else:
+                            gw.set_square_color(0, col, PRESENT_COLOR)
                     else:
                         gw.set_square_color(current_row, col, MISSING_COLOR)
                 current_row += 1
@@ -52,8 +57,16 @@ def wordle():
 
         gw.set_current_row(current_row)
     # Set the enter_action function as a callback for the ENTER key
-    # gw.set_square_letter(0, 0, 'H')
     gw.add_enter_listener(enter_action)
+    # a += 1
+    # gw.add_enter_listener(enter_action)
+    # a += 1
+    # gw.add_enter_listener(enter_action)
+    # a += 1
+    # gw.add_enter_listener(enter_action)
+    # a += 1
+    # gw.add_enter_listener(enter_action)
+    # a += 1
 
     # #MILESTONE 1
     # # Iterate through the entire matrix
