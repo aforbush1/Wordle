@@ -9,8 +9,7 @@ from WordleGraphics import WordleGWindow, N_COLS, N_ROWS, CORRECT_COLOR, PRESENT
 
 def wordle():
     # Define the maximum number of guesses
-    MAX_GUESSES = 6
-    
+    MAX_GUESSES = 5
     # Create the WordleGWindow object
     gw = WordleGWindow()
 
@@ -19,15 +18,19 @@ def wordle():
 
     # Random select from the Array of 5 letter words, set to variable "word_of_the_day".
     word_of_the_day = random.choice(FIVE_LETTER_WORDS).lower()
+
+    #temp stuff delete later
     word_of_the_day = 'helve'
     print(word_of_the_day)
 
-    # This currently just checks the first word and row
+    # Function for [ENTER]
     def enter_action(guess):
+        # Call global function
         nonlocal current_row
 
         # Check if the maximum number of guesses has been reached
-        if current_row >= MAX_GUESSES:
+        # ERROR: 'list index out of range'. I think it has something to do with incrementing after last guess...
+        if current_row > MAX_GUESSES:
             gw.show_message("You've reached the maximum number of guesses.")
             return
 
@@ -49,11 +52,11 @@ def wordle():
                         gw.set_square_color(current_row, col, PRESENT_COLOR)
                     else:
                         gw.set_square_color(current_row, col, MISSING_COLOR)
-                current_row += 1
+            
+            current_row += 1
 
         elif(guess.lower() not in FIVE_LETTER_WORDS):
             gw.show_message("Not in word list")
-            current_row += 1
 
         gw.set_current_row(current_row)
     # Set the enter_action function as a callback for the ENTER key
