@@ -37,6 +37,7 @@ def wordle():
         if(guess.lower() in FIVE_LETTER_WORDS):
             if(guess.lower() == word_of_the_day.lower()):
                 for col in range(0, N_COLS):
+                    
                     # row needs to be adjusted to be current
                     gw.set_square_color(current_row, col, CORRECT_COLOR)
                 gw.show_message("You guessed the word!")
