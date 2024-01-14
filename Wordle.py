@@ -8,8 +8,12 @@ from WordleDictionary import FIVE_LETTER_WORDS
 from WordleGraphics import WordleGWindow, N_COLS, N_ROWS, CORRECT_COLOR, PRESENT_COLOR, MISSING_COLOR
 
 def wordle():
+    # Define the maximum number of guesses
+    MAX_GUESSES = 6
+    current_row = 0
     # Create the WordleGWindow object
     gw = WordleGWindow()
+
     # Random select from the Array of 5 letter words, set to variable "word_of_the_day".
     word_of_the_day = random.choice(FIVE_LETTER_WORDS).lower()
     word_of_the_day = 'helve'
@@ -17,6 +21,13 @@ def wordle():
 
     # This currently just checks the first word and row
     def enter_action(guess):
+        nonlocal current_row
+
+        # Check if the maximum number of guesses has been reached
+        if current_row >= MAX_GUESSES:
+            gw.show_message("You've reached the maximum number of guesses.")
+            return
+
         for col, letter in enumerate(guess):
             gw.set_square_letter(0, col, letter)
 
@@ -25,7 +36,6 @@ def wordle():
                 for col in range(0, N_COLS):
                     # row needs to be adjusted to be current
                     gw.set_square_color(0, col, CORRECT_COLOR)
-                
                 gw.show_message("You guessed the word!")
             else:
                 for col in range(0, N_COLS):
@@ -40,9 +50,10 @@ def wordle():
                         gw.set_square_color(0, col, MISSING_COLOR)
         elif(guess.lower() not in FIVE_LETTER_WORDS):
             gw.show_message("Not in word list")
+            current_row += 1
 
     a = N_ROWS
-    # Call the function
+    # Set the enter_action function as a callback for the ENTER key
     gw.add_enter_listener(enter_action)
     # a += 1
     # gw.add_enter_listener(enter_action)
@@ -64,3 +75,4 @@ if __name__ == "__main__":
     wordle()
     # Press the "Enter" key in the terminal to close the program
     input("Press Enter to exit")
+
