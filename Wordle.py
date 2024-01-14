@@ -26,6 +26,12 @@ def wordle():
         # Call global function
         nonlocal current_row
 
+        word = []
+        wordle_columns = []
+        guess_columns = []
+        green = []
+        yellow = []
+
         # Check if the maximum number of guesses has been reached
         # ERROR: 'list index out of range'. I think it has something to do with incrementing after last guess...
         if current_row > MAX_GUESSES:
@@ -39,26 +45,33 @@ def wordle():
                         gw.set_square_color(current_row, col, PRESENT_COLOR)
                     else:
                         gw.set_square_color(current_row, col, MISSING_COLOR)
-            
+
             return
 
         for col, letter in enumerate(guess):
             gw.set_square_letter(current_row, col, letter)
 
+        for char in word_of_the_day:
+            word.append(char)
+
         if(guess.lower() in FIVE_LETTER_WORDS):
             if(guess.lower() == word_of_the_day.lower()):
                 for col in range(0, N_COLS):
                     gw.set_square_color(current_row, col, CORRECT_COLOR)
+
                 gw.show_message("You guessed the word!")
             else:
-                for col in range(0, N_COLS):
-                    if(gw.get_square_letter(current_row, col).lower() == word_of_the_day[col]):
-                        gw.set_square_color(current_row, col, CORRECT_COLOR)
-                    elif(gw.get_square_letter(current_row, col).lower() in word_of_the_day):
-                        gw.set_square_color(current_row, col, PRESENT_COLOR)
+                for col, char in enumerate(guess.lower()):
+                    if (char in word):
+                        if(col == word.index(char)):
+                            gw.set_square_color(current_row, col, CORRECT_COLOR)
+                        else:
+                            gw.set_square_color(current_row, col, PRESENT_COLOR)
+                        
+                        word[word.index(char)] = "*"
                     else:
                         gw.set_square_color(current_row, col, MISSING_COLOR)
-            
+
             current_row += 1
 
         elif(guess.lower() not in FIVE_LETTER_WORDS):
