@@ -14,7 +14,9 @@ def wordle():
     # Create the WordleGWindow object
     gw = WordleGWindow()
 
+    # Set the get_current_row() function to variable
     current_row = gw.get_current_row()
+
     # Random select from the Array of 5 letter words, set to variable "word_of_the_day".
     word_of_the_day = random.choice(FIVE_LETTER_WORDS).lower()
     word_of_the_day = 'helve'
