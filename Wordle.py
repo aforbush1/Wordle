@@ -39,9 +39,6 @@ def wordle():
         #Create a list to keep track of the word
         for char in word_of_the_day:
             word.append(char)
-
-        #ADAM: I MADE SOME CHANGES TO MY CODE, SO YOU MIGHT WANT TO TAKE A LOOK AROUND AND SEE HOW TO DO THIS
-        #ALSO, YOU'LL NOTICE IN TERMINAL WHEN YOU RUN THIS THAT IT RETURNS AN ERROR AFTER 6 GUESSES
             
         #Check if guess is in the dictionary (aka is a word)
         if(guess.lower() in FIVE_LETTER_WORDS):
