@@ -17,8 +17,7 @@ def wordle():
     # Set the get_current_row() function to variable
     current_row = gw.get_current_row()
     # Random select from the Array of 5 letter words, set to variable "word_of_the_day".
-    # word_of_the_day = random.choice(FIVE_LETTER_WORDS).lower()
-    word_of_the_day ="alter"
+    word_of_the_day = random.choice(FIVE_LETTER_WORDS).lower()
 
     # Function for [ENTER]
     def enter_action(guess):
@@ -26,7 +25,7 @@ def wordle():
         nonlocal current_row
 
         if current_row >= MAX_GUESSES:
-            gw.show_message(f"The Word of the day is {word_of_the_day}")
+            gw.show_message(f"The word of the day is {word_of_the_day.upper()}")
             return
         
         # Create local variables
