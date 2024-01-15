@@ -17,12 +17,18 @@ def wordle():
     # Set the get_current_row() function to variable
     current_row = gw.get_current_row()
     # Random select from the Array of 5 letter words, set to variable "word_of_the_day".
-    word_of_the_day = random.choice(FIVE_LETTER_WORDS).lower()
+    # word_of_the_day = random.choice(FIVE_LETTER_WORDS).lower()
+    word_of_the_day ="alter"
 
     # Function for [ENTER]
     def enter_action(guess):
         # Call global variable
         nonlocal current_row
+
+        if current_row >= MAX_GUESSES:
+            gw.show_message(f"The Word of the day is {word_of_the_day}")
+            return
+        
         # Create local variables
         word = []
         green = []
@@ -38,11 +44,6 @@ def wordle():
         #ADAM: I MADE SOME CHANGES TO MY CODE, SO YOU MIGHT WANT TO TAKE A LOOK AROUND AND SEE HOW TO DO THIS
         #ALSO, YOU'LL NOTICE IN TERMINAL WHEN YOU RUN THIS THAT IT RETURNS AN ERROR AFTER 6 GUESSES
             
-        # Keep track of maximum guesses
-        if(current_row >= MAX_GUESSES):
-            gw.show_message("You've reached the maximum number of guesses.")
-            return
-
         #Check if guess is in the dictionary (aka is a word)
         if(guess.lower() in FIVE_LETTER_WORDS):
             # if yes, then see if it is the word of the day
@@ -58,6 +59,8 @@ def wordle():
 
                 #Huzzah magic powers
                 gw.show_message(f"You guessed the word! It took you {current_row + 1} tries")
+                return
+
             else:
                 # Get results for each character in the guess
                 for col, char in enumerate(guess.lower()):
@@ -95,15 +98,24 @@ def wordle():
 
             # iterate the rows by one
             current_row += 1
-        #If guess isn't a word, then do it again
-        elif(guess.lower() not in FIVE_LETTER_WORDS):
-            gw.show_message("Not in word list")
+        
+        # Check if the game has reached its last guess
+        if current_row == MAX_GUESSES:
+            if guess.lower() != word_of_the_day.lower():
+                gw.show_message(f"The Word of the day is {word_of_the_day}")
 
+            # This will end the game by not allowing more guesses
+            return
+
+        elif guess.lower() not in FIVE_LETTER_WORDS:
+            gw.show_message("Not in word list")
+        
         # Keep the row accurate
         gw.set_current_row(current_row)
 
     # Set the enter_action function as a callback for the ENTER key
     gw.add_enter_listener(enter_action)
+
 
 #****************************************************************
     # #MILESTONE 1
