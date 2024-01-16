@@ -98,10 +98,8 @@ def wordle():
         # Check if the game has reached its last guess
         if current_row == MAX_GUESSES:
             if guess.lower() != word_of_the_day.lower():
-                gw.show_message(f"The Word of the day is {word_of_the_day}")
-
-            # This will end the game by not allowing more guesses
-            return
+                gw.show_message(f"The word of the day is {word_of_the_day.upper()}")
+                return
 
         elif guess.lower() not in FIVE_LETTER_WORDS:
             gw.show_message("Not in word list")
