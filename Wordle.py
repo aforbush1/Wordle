@@ -10,24 +10,16 @@ from WordleGraphics import WordleGWindow, N_COLS, N_ROWS, CORRECT_COLOR, PRESENT
 
 #Define opening function
 def wordle():
-    # Define the maximum number of guesses
-    MAX_GUESSES = 6
     # Create the WordleGWindow object
     gw = WordleGWindow()
-    # Set the get_current_row() function to variable
-    current_row = gw.get_current_row()
     # Random select from the Array of 5 letter words, set to variable "word_of_the_day".
-    # word_of_the_day = random.choice(FIVE_LETTER_WORDS).lower()
-    word_of_the_day = 'World'
+    word_of_the_day = random.choice(FIVE_LETTER_WORDS).lower()
+    word_of_the_day = "hello"
 
     # Function for [ENTER]
     def enter_action(guess):
-        # Call global variable
-        nonlocal current_row
-
-        # if current_row >= MAX_GUESSES:
-        #     gw.show_message(f"The word of the day is {word_of_the_day.upper()}")
-        #     return
+        # Get the current row
+        current_row = gw.get_current_row()
         
         # Create local variables
         word = []
@@ -57,7 +49,6 @@ def wordle():
                 #Huzzah magic powers
                 gw.show_message(f"You guessed the word! It took you {current_row + 1} tries")
                 return
-
             else:
                 # Get results for each character in the guess
                 for col, char in enumerate(guess.lower()):
@@ -96,12 +87,12 @@ def wordle():
             # iterate the rows by one
             current_row += 1
         
-        # Check if the game has reached its last guess
-        if current_row == MAX_GUESSES:
-            if guess.lower() != word_of_the_day.lower():
-                gw.show_message(f"The word of the day is {word_of_the_day.upper()}")
-                return
-
+            # Check if the game has reached its last guess
+            if current_row == N_ROWS:
+                if guess.lower() != word_of_the_day.lower():
+                    gw.show_message(f"The word of the day is {current_row}, {N_COLS}")
+                    return
+        #Otherwise, show error message
         elif guess.lower() not in FIVE_LETTER_WORDS:
             gw.show_message("Not in word list")
         
