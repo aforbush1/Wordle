@@ -14,7 +14,11 @@ def wordle():
     gw = WordleGWindow()
     # Random select from the Array of 5 letter words, set to variable "word_of_the_day".
     word_of_the_day = random.choice(FIVE_LETTER_WORDS).lower()
-    word_of_the_day = "hello"
+
+    # Function to end the program
+    def exit_program(event=None):
+        # Destroys the window and ends the program
+        gw._root.destroy()
 
     # Function for [ENTER]
     def enter_action(guess):
@@ -46,9 +50,10 @@ def wordle():
                     for letter in guess:
                         gw.set_key_color(letter, CORRECT_COLOR)
 
-                #Huzzah magic powers
-                gw.show_message(f"You guessed the word! It took you {current_row + 1} tries")
-                return
+                # If the user guesses it, then congratulate them
+                gw.show_message(f"You got it in {current_row + 1} {'try' if current_row == 0 else 'tries'}! Press any key to exit.")
+                #End the program
+                gw._root.bind("<KeyPress>", exit_program)
             else:
                 # Get results for each character in the guess
                 for col, char in enumerate(guess.lower()):
@@ -90,18 +95,21 @@ def wordle():
             # Check if the game has reached its last guess
             if current_row == N_ROWS:
                 if guess.lower() != word_of_the_day.lower():
-                    gw.show_message(f"The word of the day is {current_row}, {N_COLS}")
-                    return
+                    # If the user doesn't guess it, then show the answer
+                    gw.show_message(f"Wordle is {word_of_the_day.upper()}. Press any key to exit.")
+                    #End the program
+                    gw._root.bind("<KeyPress>", exit_program)
         #Otherwise, show error message
         elif guess.lower() not in FIVE_LETTER_WORDS:
             gw.show_message("Not in word list")
-        
-        # Keep the row accurate
-        gw.set_current_row(current_row)
+
+        # Make sure that we don't overextend the row boundary
+        if(current_row < N_ROWS):
+            # Keep the row accurate
+            gw.set_current_row(current_row)
 
     # Set the enter_action function as a callback for the ENTER key
     gw.add_enter_listener(enter_action)
-
 
 #****************************************************************
     # #MILESTONE 1
@@ -112,6 +120,8 @@ def wordle():
 
 # Startup code
 if __name__ == "__main__":
+    #Get the program started
     wordle()
+
     # Press the "Enter" key in the terminal to close the program
     input("Press Enter to exit")
