@@ -25,9 +25,9 @@ def wordle():
         # Call global variable
         nonlocal current_row
 
-        # if current_row >= MAX_GUESSES:
-        #     gw.show_message(f"The word of the day is {word_of_the_day.upper()}")
-        #     return
+        if current_row >= MAX_GUESSES:
+            gw.show_message(f"The word of the day is {word_of_the_day.upper()}")
+            return
         
         # Create local variables
         word = []
