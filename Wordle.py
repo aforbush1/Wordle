@@ -7,13 +7,39 @@ BE SURE TO UPDATE THIS COMMENT WHEN YOU WRITE THE CODE.
 import random
 from WordleDictionary import FIVE_LETTER_WORDS
 from WordleGraphics import WordleGWindow, N_COLS, N_ROWS, CORRECT_COLOR, PRESENT_COLOR, MISSING_COLOR, KEY_COLOR, UNKNOWN_COLOR
+import tkinter as tk
+from tkinter import messagebox
+
+# Alternate Colors
+ALTERNATE_CORRECT_COLOR = "#009e73"
+ALTERNATE_PRESENT_COLOR = "#f0e442"
+ALTERNATE_MISSING_COLOR = "#999999"
+ALTERNATE_UNKNOWN_COLOR = "#FFFFFF"
+ALTERNATE_KEY_COLOR = "#DDDDDD"
+
+def initialize_wordle():
+    # Ask the user if they want to use alternate colors using a messagebox
+    use_alternate_colors = messagebox.askyesno("Color Choice", "Would you like to use alternate colors?")
+
+    # Check if the user wants to use alternate colors
+    if use_alternate_colors:
+        global CORRECT_COLOR, PRESENT_COLOR, MISSING_COLOR, KEY_COLOR, UNKNOWN_COLOR
+        CORRECT_COLOR = ALTERNATE_CORRECT_COLOR
+        PRESENT_COLOR = ALTERNATE_PRESENT_COLOR
+        MISSING_COLOR = ALTERNATE_MISSING_COLOR
+        KEY_COLOR = ALTERNATE_KEY_COLOR
+        UNKNOWN_COLOR = ALTERNATE_UNKNOWN_COLOR
+
+    wordle()
 
 #Define opening function
 def wordle():
-    # Create the WordleGWindow object
+
     gw = WordleGWindow()
+
     # Random select from the Array of 5 letter words, set to variable "word_of_the_day".
-    word_of_the_day = random.choice(FIVE_LETTER_WORDS).lower()
+    # word_of_the_day = random.choice(FIVE_LETTER_WORDS).lower()
+    word_of_the_day = "World"
 
     # Function to end the program
     def exit_program(event=None):
@@ -121,7 +147,12 @@ def wordle():
 # Startup code
 if __name__ == "__main__":
     #Get the program started
-    wordle()
+    root = tk.Tk()
+    root.withdraw()  # Hide the main window
+
+    root.after(0, initialize_wordle)
+
+    root.mainloop()
 
     # Press the "Enter" key in the terminal to close the program
     input("Press Enter to exit")
