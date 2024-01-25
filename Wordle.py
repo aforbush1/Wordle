@@ -103,20 +103,20 @@ def wordle():
                         # Make everything yellow for now
                         gw.set_square_color(current_row, col, PRESENT_COLOR)
 
-                            # Make sure the keys don't change color to gray; they can change to green (see ahead)
-                            if(gw.get_key_color(char.upper()) in {KEY_COLOR,UNKNOWN_COLOR,PRESENT_COLOR}):
-                                gw.set_key_color(char.upper(),PRESENT_COLOR)
+                        # Make sure the keys don't change color to gray; they can change to green (see ahead)
+                        if(gw.get_key_color(char.upper()) in {KEY_COLOR,UNKNOWN_COLOR,PRESENT_COLOR}):
+                            gw.set_key_color(char.upper(),PRESENT_COLOR)
 
-                            #Replace value on the word list so that it won't be counted again
-                            if(word.count(char) < guess.count(char)):
-                                word[word.index(char)] = "*"
-                        # Otherwise, color gray
-                        else:
-                            gw.set_square_color(current_row, col, MISSING_COLOR)
+                        #Replace value on the word list so that it won't be counted again
+                        if(word.count(char) < guess.count(char)):
+                            word[word.index(char)] = "*"
+                    # Otherwise, color gray
+                    else:
+                        gw.set_square_color(current_row, col, MISSING_COLOR)
 
-                            #Once gray, forever gray
-                            if(gw.get_key_color(char.upper()) in {KEY_COLOR,UNKNOWN_COLOR}):
-                                gw.set_key_color(char.upper(),MISSING_COLOR)
+                        #Once gray, forever gray
+                        if(gw.get_key_color(char.upper()) in {KEY_COLOR,UNKNOWN_COLOR}):
+                            gw.set_key_color(char.upper(),MISSING_COLOR)
 
                     # Output and display the green; it will overlay on the yellow
                     for item in green:
