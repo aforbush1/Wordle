@@ -170,6 +170,15 @@ class WordleGWindow:
         root.bind("<ButtonRelease-1>", release_action)
         self._row = 0
         self._col = 0
+
+        # Center the window on the screen
+        self._root.update_idletasks()  # Update window dimensions
+        screen_width = self._root.winfo_screenwidth()
+        screen_height = self._root.winfo_screenheight()
+        x = (screen_width - self._root.winfo_width()) // 2
+        y = (screen_height - self._root.winfo_height()) // 2
+        self._root.geometry(f"+{x}+{y}")
+
         atexit.register(start_event_loop)
 
     def get_square_letter(self, row, col):

@@ -11,18 +11,23 @@ import tkinter as tk
 from tkinter import messagebox
 
 # Alternate Colors
-ALTERNATE_CORRECT_COLOR = "#009e73"
-ALTERNATE_PRESENT_COLOR = "#f0e442"
+ALTERNATE_CORRECT_COLOR = "#93CAED"
+ALTERNATE_PRESENT_COLOR = "#FAC898"
 ALTERNATE_MISSING_COLOR = "#999999"
 ALTERNATE_UNKNOWN_COLOR = "#FFFFFF"
 ALTERNATE_KEY_COLOR = "#DDDDDD"
 
-def initialize_wordle():
+#Define opening function
+def wordle():
+    gw = WordleGWindow()
+
     # Ask the user if they want to use alternate colors using a messagebox
-    use_alternate_colors = messagebox.askyesno("Color Choice", "Would you like to use alternate colors?")
+    use_alternate_colors = messagebox.askyesno("Color Choice", "Would you like to use alternate colors?", default='no')
+    gw._root.focus_force()
 
     # Check if the user wants to use alternate colors
     if use_alternate_colors:
+        #Change the colors to a blue-orange color scheme
         global CORRECT_COLOR, PRESENT_COLOR, MISSING_COLOR, KEY_COLOR, UNKNOWN_COLOR
         CORRECT_COLOR = ALTERNATE_CORRECT_COLOR
         PRESENT_COLOR = ALTERNATE_PRESENT_COLOR
@@ -30,16 +35,8 @@ def initialize_wordle():
         KEY_COLOR = ALTERNATE_KEY_COLOR
         UNKNOWN_COLOR = ALTERNATE_UNKNOWN_COLOR
 
-    wordle()
-
-#Define opening function
-def wordle():
-
-    gw = WordleGWindow()
-
     # Random select from the Array of 5 letter words, set to variable "word_of_the_day".
-    # word_of_the_day = random.choice(FIVE_LETTER_WORDS).lower()
-    word_of_the_day = "bunny"
+    word_of_the_day = random.choice(FIVE_LETTER_WORDS)
 
     # Function to end the program
     def exit_program(event=None):
@@ -50,7 +47,7 @@ def wordle():
     def enter_action(guess):
         # Get the current row
         current_row = gw.get_current_row()
-        
+        guess_length = 0
         # Create local variables
         word = []
         green = []
@@ -58,76 +55,88 @@ def wordle():
         #Set the letters in the squares
         for col, letter in enumerate(guess):
             gw.set_square_letter(current_row, col, letter)
+            
+            # Make sure it's a five-letter word
+            if(letter != " "):
+                guess_length += 1
 
         #Create a list to keep track of the word
         for char in word_of_the_day:
             word.append(char)
-            
-        #Check if guess is in the dictionary (aka is a word)
-        if(guess.lower() in FIVE_LETTER_WORDS):
-            # if yes, then see if it is the word of the day
-            if(guess.lower() == word_of_the_day.lower()):
-                #If yes, then color it appropriately
-                for col in range(0, N_COLS):
-                    #Color the squares correctly
-                    gw.set_square_color(current_row, col, CORRECT_COLOR)
+        
+        # Check if the guess is a five-letter word
+        if (guess_length == 5):
+            # Lowercase guess variable
+            guess = guess.lower()
 
-                    #Make sure to color the keys right
-                    for letter in guess:
-                        gw.set_key_color(letter, CORRECT_COLOR)
+            #Check if guess is in the dictionary (aka is a word)
+            if(guess in FIVE_LETTER_WORDS):
+                # if yes, then see if it is the word of the day
+                if(guess == word_of_the_day):
+                    #If yes, then color it appropriately
+                    for col in range(0, N_COLS):
+                        #Color the squares correctly
+                        gw.set_square_color(current_row, col, CORRECT_COLOR)
 
-                # If the user guesses it, then congratulate them
-                gw.show_message(f"You got it in {current_row + 1} {'try' if current_row == 0 else 'tries'}! Press any key to exit.")
-                #End the program
-                gw._root.bind("<KeyPress>", exit_program)
-            else:
-                # Get results for each character in the guess
-                for col, char in enumerate(guess.lower()):
-                    #Update for green by comparing guess string to word of day strings
-                    if(char == word[col]):
-                        # Send matches to a list
-                        green.append([col,char])
+                        #Make sure to color the keys right
+                        for letter in guess:
+                            gw.set_key_color(letter.upper(), CORRECT_COLOR)
+
+                    # If the user guesses it, then congratulate them
+                    gw.show_message(f"You got it in {current_row + 1} {'try' if current_row == 0 else 'tries'}! Press any key to exit.")
+                    #End the program
+                    gw._root.bind("<KeyPress>", exit_program)
+                else:
+                    # Get results for each character in the guess
+                    for col, char in enumerate(guess):
+                        #Update for green by comparing guess string to word of day strings
+                        if(char == word[col]):
+                            # Send matches to a list
+                            green.append(col)
+                            guess_word = []
 
                         # Green is applied over anything
                         if(gw.get_key_color(char.upper()) in {KEY_COLOR,UNKNOWN_COLOR,PRESENT_COLOR}):
                             gw.set_key_color(char.upper(),CORRECT_COLOR)
                     # If the character is in the daily word, then do stuff
                     if(char in word):
-                        # Make everything yellow
+                        # Make everything yellow for now
                         gw.set_square_color(current_row, col, PRESENT_COLOR)
 
-                        # Make sure the keys don't change color to gray; they can change to green (see ahead)
-                        if(gw.get_key_color(char.upper()) in {KEY_COLOR,UNKNOWN_COLOR,PRESENT_COLOR}):
-                            gw.set_key_color(char.upper(),PRESENT_COLOR)
+                            # Make sure the keys don't change color to gray; they can change to green (see ahead)
+                            if(gw.get_key_color(char.upper()) in {KEY_COLOR,UNKNOWN_COLOR,PRESENT_COLOR}):
+                                gw.set_key_color(char.upper(),PRESENT_COLOR)
 
-                        #Replace value on the word list so that it won't be counted again
-                        if(word.count(char) < guess.count(char.upper())):
-                            word[word.index(char)] = "*"
-                    # Otherwise, color gray
-                    else:
-                        gw.set_square_color(current_row, col, MISSING_COLOR)
+                            #Replace value on the word list so that it won't be counted again
+                            if(word.count(char) < guess.count(char)):
+                                word[word.index(char)] = "*"
+                        # Otherwise, color gray
+                        else:
+                            gw.set_square_color(current_row, col, MISSING_COLOR)
 
-                        #Once gray, forever gray
-                        if(gw.get_key_color(char.upper()) in {KEY_COLOR,UNKNOWN_COLOR}):
-                            gw.set_key_color(char.upper(),MISSING_COLOR)
+                            #Once gray, forever gray
+                            if(gw.get_key_color(char.upper()) in {KEY_COLOR,UNKNOWN_COLOR}):
+                                gw.set_key_color(char.upper(),MISSING_COLOR)
 
-                # Output and display the green; it will overlay on the yellow
-                for item in green:
-                    gw.set_square_color(current_row, item[0], CORRECT_COLOR)      
+                    # Output and display the green; it will overlay on the yellow
+                    for item in green:
+                        gw.set_square_color(current_row, item, CORRECT_COLOR)
 
-            # iterate the rows by one
-            current_row += 1
-        
-            # Check if the game has reached its last guess
-            if current_row == N_ROWS:
-                if guess.lower() != word_of_the_day.lower():
-                    # If the user doesn't guess it, then show the answer
-                    gw.show_message(f"Wordle is {word_of_the_day.upper()}. Press any key to exit.")
-                    #End the program
-                    gw._root.bind("<KeyPress>", exit_program)
-        #Otherwise, show error message
-        elif guess.lower() not in FIVE_LETTER_WORDS:
-            gw.show_message("Not in word list")
+                # iterate the rows by one
+                current_row += 1
+            
+                # Check if the game has reached its last guess
+                if current_row == N_ROWS:
+                    if guess.lower() != word_of_the_day.lower():
+                        # If the user doesn't guess it, then show the answer
+                        gw.show_message(f"Wordle is {word_of_the_day.upper()}. Press any key to exit.")
+                        #End the program
+                        gw._root.bind("<KeyPress>", exit_program)
+            #Otherwise, show error message
+            else:
+                gw.show_message("Not in word list")
+        else:
+            gw.show_message("Enter a 5-letter word")
 
         # Make sure that we don't overextend the row boundary
         if(current_row < N_ROWS):
@@ -147,12 +156,10 @@ def wordle():
 # Startup code
 if __name__ == "__main__":
     #Get the program started
-    root = tk.Tk()
-    root.withdraw()  # Hide the main window
+    msg = tk.Tk()
+    msg.withdraw()  # Hide the main window
 
-    root.after(0, initialize_wordle)
-
-    root.mainloop()
+    wordle()
 
     # Press the "Enter" key in the terminal to close the program
     input("Press Enter to exit")
