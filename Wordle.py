@@ -39,7 +39,7 @@ def wordle():
 
     # Random select from the Array of 5 letter words, set to variable "word_of_the_day".
     # word_of_the_day = random.choice(FIVE_LETTER_WORDS).lower()
-    word_of_the_day = "World"
+    word_of_the_day = "bunny"
 
     # Function to end the program
     def exit_program(event=None):
@@ -93,7 +93,7 @@ def wordle():
                             gw.set_key_color(char.upper(),CORRECT_COLOR)
                     # If the character is in the daily word, then do stuff
                     if(char in word):
-                        # Make everything yellow for now
+                        # Make everything yellow
                         gw.set_square_color(current_row, col, PRESENT_COLOR)
 
                         # Make sure the keys don't change color to gray; they can change to green (see ahead)
