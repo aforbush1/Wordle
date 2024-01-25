@@ -9,7 +9,6 @@ from WordleDictionary import FIVE_LETTER_WORDS
 from WordleGraphics import WordleGWindow, N_COLS, N_ROWS, CORRECT_COLOR, PRESENT_COLOR, MISSING_COLOR, KEY_COLOR, UNKNOWN_COLOR
 import tkinter as tk
 from tkinter import messagebox
-from tkinter import *
 
 # Alternate Colors
 ALTERNATE_CORRECT_COLOR = "#93CAED"
@@ -24,7 +23,7 @@ def wordle():
 
     # Ask the user if they want to use alternate colors using a messagebox
     use_alternate_colors = messagebox.askyesno("Color Choice", "Would you like to use alternate colors?", default='no')
-    root.destroy()
+    gw._root.focus_force()
 
     # Check if the user wants to use alternate colors
     if use_alternate_colors:
@@ -148,7 +147,7 @@ def wordle():
             else:
                 gw.show_message("Not in word list")
         else:
-            gw.show_message("Enter 5-letter word")
+            gw.show_message("Enter a 5-letter word")
 
         # Make sure that we don't overextend the row boundary
         if(current_row < N_ROWS):
@@ -168,8 +167,8 @@ def wordle():
 # Startup code
 if __name__ == "__main__":
     #Get the program started
-    root = tk.Tk()
-    root.withdraw()  # Hide the main window
+    msg = tk.Tk()
+    msg.withdraw()  # Hide the main window
 
     wordle()
 
